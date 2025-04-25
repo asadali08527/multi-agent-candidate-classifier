@@ -51,7 +51,7 @@ email_body="""
             <h3>Overview of Interview Rounds:</h3>
             <ol>
                 <li><strong>First Round: Technical Assessment</strong>
-                    <p>This assessment will evaluate your proficiency in Generative AI skills using <a href="https://www.testgorilla.com">TestGorilla</a>. It lasts 21 minutes. Candidates who perform well will move on to the next round.</p>
+                    <p>This assessment will evaluate your proficiency in Generative AI skills using <a href="https://www.testgorilla.com">TestGorilla</a>. It lasts 25 minutes. Candidates who perform well will move on to the next round.</p>
                 </li>
                 <li><strong>Second Round: Take-Home Assignment</strong>
                     <p>Evaluate your ability to apply skills to real-world scenarios, focusing on coding, architecture design, and attention to detail.</p>
@@ -72,14 +72,18 @@ email_body="""
                 <li>What are your <strong>current</strong> and <strong>expected salary</strong>?</li>
                 <li>What is your <strong>Visa Status</strong>?</li>
                 <li>Are you in the <strong>San Francisco Bay Area</strong>? If not, can you relocate?</li>
+                <li>Can you share your link to your <strong>github</strong> or <strong>open source contributions</strong>?</li>
+                <li>Please share your <strong>resume</strong> </li>
             </ul>
 
             <h3>Instructions for Technical Assessment:</h3>
-            <p>The 21-minute assessment link can be found below. Please ensure you have sufficient free time to complete the test.</p>
-            <p><a href="https://app.testgorilla.com/s/lrjmqiwu">Click here to begin the assessment</a></p>
+            <p>
+            The 25-minute assessment link is provided below. Please ensure you have uninterrupted time to complete the test in a single sitting. We strongly recommend keeping the test window in full screen with your camera turned on throughout the session. TestGorilla employs strict anti-cheating measures, including automatic screen and audio recording. Please note that we value integrity over scores — a lower score achieved honestly is preferred over a higher score obtained through unfair means.
+            </p>
+            <p><a href="https://app.testgorilla.com/s/w5capm7p">Click here to begin the assessment</a></p>
             <h3>Important Notes:</h3>
             <ul>
-                <li>This is an <strong>onsite hybrid role</strong>, requiring relocation to the San Francisco Bay Area.</li>
+                <li>This is an <strong>onsite hybrid role(non-negotiable)</strong>, requiring relocation to the San Francisco Bay Area.</li>
                 <li>As a startup, we value flexibility and all-rounder skills to contribute across multiple areas when needed.</li>
             </ul>
             <p>We appreciate your commitment to this process. If you have questions, feel free to reach out. Looking forward to your participation!</p>

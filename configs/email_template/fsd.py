@@ -73,8 +73,8 @@ email_body="""
                 <li>Are you in the <strong>San Francisco Bay Area</strong>? If not, are you open to relocating?</li>
             </ul>
             <h3>Instructions for Technical Assessment:</h3>
-            <p>The assessment link can be found below. Please ensure you have sufficient free time(arond 2 hours) to complete the test.</p>
-            <p><a href="https://app.testgorilla.com/s/qodztcar">Click here to begin the assessment</a></p>
+            <p>The assessment link can be found below. Please ensure you have sufficient free time(around 2 hours) to complete the test. Please ensure you have uninterrupted time to complete the test in a single sitting. We strongly recommend keeping the test window in full screen with your camera turned on throughout the session. TestGorilla employs strict anti-cheating measures, including automatic screen and audio recording. Please note that we value integrity over scores — a lower score achieved honestly is preferred over a higher score obtained through unfair means.</p>
+            <p><a href="https://app.testgorilla.com/s/hnv66s1d">Click here to begin the assessment</a></p>
             <h3>Important Notes:</h3>
             <ul>
                 <li>This is an <strong>onsite hybrid role</strong>, requiring relocation to the San Francisco Bay Area.</li>

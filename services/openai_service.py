@@ -15,7 +15,7 @@ api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=api_key)
 
 # Classify candidate using OpenAI
-def classify_candidate(email_body, attachments):
+def classify_candidate(email_body, attachments, email_subject=""):
     jd_context = f"""
     We are hiring for the following roles:
     {full_stack_developer_job_description},
@@ -25,10 +25,13 @@ def classify_candidate(email_body, attachments):
     """
 
     prompt = f"""
-    Given the following job descriptions and the email content, We want you to act as lead Technical HR to screen the candidate and classify which role the candidate is eligible for:
+    Given the following job descriptions, email subject, and email content, act as a lead Technical HR to screen the candidate and determine if they are a good match for the role they applied for:
 
     Job Descriptions:
     {jd_context}
+
+    Email Subject (Role Applied For):
+    {email_subject}
 
     Candidate Email Content:
     {email_body}
@@ -36,7 +39,7 @@ def classify_candidate(email_body, attachments):
 
     file_ids = []
     if attachments:
-        prompt += "\nThe candidate has also attached the his CV/Resume:\n"
+        prompt += "\nThe candidate has also attached their CV/Resume:\n"
         for attachment in attachments:
             filename = attachment["filename"]
             content = attachment["content"]
@@ -58,8 +61,90 @@ def classify_candidate(email_body, attachments):
 
     # Add the final instruction to the prompt
     prompt += """
-    Based on the provided email content, determine the role the candidate is eligible for. 
-    Respond with only the job role (e.g., "Full Stack Developer" or "LLM Research Engineer" or "Unknown") and if the candidate is not eligible for either "Full Stack Developer" or "LLM Research Engineer" return Unknown in the response.
+    Based on the provided email content, determine if the candidate is a good match for the role(subject) they applied for.
+    Consider the following:
+
+    PRIMARY FILTER - LOCATION:
+    1. First, check the candidate's current location from email body or attachments
+    2. If the candidate is NOT currently located in the United States:
+       - Return "Unknown" immediately
+       - Do not proceed with further evaluation
+    3. Only proceed with role evaluation if the candidate is in the United States
+
+    For LLM Research Engineer role (STRICT CRITERIA):
+    1. Must have at least one of these educational qualifications:
+       - Master's or PhD in AI/ML, Computer Science, Mathematics, or Statistics
+    2. Must have direct experience in Large Language Models (LLMs) and at least two of these areas:
+       - Generative AI
+       - Machine Learning/Deep Learning
+       - Natural Language Processing
+       - NLP
+    3. Must have hands-on experience with:
+       - Training or fine-tuning LLMs
+       - Working with transformer architectures
+       - ML frameworks (PyTorch, TensorFlow)
+    4. MUST have held one of these job titles/roles in their previous experience:
+       - ML Engineer
+       - Machine Learning Engineer
+       - AI Engineer
+       - Research Scientist (in AI/ML)
+       - Gen AI Engineer
+       - LLM Engineer
+       - AI Research Engineer
+       - Deep Learning Engineer
+       - NLP Engineer
+    5. DO NOT consider candidates with these job titles/roles for LLM Research Engineer position:
+       - Software Engineer
+       - DevOps Engineer
+       - MLOps Engineer
+       - Data Engineer
+       - Full Stack Developer
+       - Backend Engineer
+       - Frontend Engineer
+       - System Engineer
+       - Any other non-ML engineering roles
+    
+    For Full Stack Developer role (FLEXIBLE CRITERIA):
+    1. Should have experience in:
+       - Frontend development (React, Angular, or similar)
+       - Backend development (Node.js, Python, or similar)
+       - Database management
+    2. Bonus points for:
+       - DevOps experience
+       - Cloud platforms (AWS, GCP, Azure)
+       - CI/CD pipelines
+    
+    Evaluation Process:
+    1. First, check the candidate's location:
+       - If not in US, return "Unknown" immediately
+       - If in US, proceed with role evaluation
+    2. Then, check the role mentioned in the email subject
+    3. For LLM Research Engineer:
+       - Strictly verify educational qualifications
+       - Strictly verify required experience in AI/ML and LLMs
+       - MUST verify previous job titles/roles match ML/AI positions
+       - Return "Unknown" if ANY criteria are not met
+    4. For Full Stack Developer:
+       - More flexible evaluation
+       - Consider transferable skills
+       - Accept candidates with relevant experience
+    
+    Respond with only one of these options:
+    - "Full Stack Developer" if:
+       * Candidate is in US
+       * Meets the flexible criteria for Full Stack Developer role
+    - "LLM Research Engineer" ONLY if:
+       * Candidate is in US
+       * Meets ALL educational qualifications
+       * Has required experience in AI/ML and LLMs
+       * Has held ML/AI specific job titles/roles
+       * Does NOT have only non-ML engineering experience
+    - "Unknown" if:
+       * Candidate is NOT in US
+       * The candidate doesn't meet ANY of the strict criteria for LLM Research Engineer
+       * The candidate has only non-ML engineering experience
+       * The candidate doesn't have relevant experience for Full Stack Developer
+       * The role cannot be determined
     """
     try:
         if attachments:

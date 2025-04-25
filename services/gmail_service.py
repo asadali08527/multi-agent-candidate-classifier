@@ -53,7 +53,8 @@ def send_reply(service, message, role, recipients):
     # Get the message ID and sender's email from the message
     thread_id = message['threadId']
     headers = {header['name']: header['value'] for header in message['payload']['headers']}
-    subject = headers.get("Subject", "")
+    subject = f"Next Steps for {role} Position"
+    
     # Define custom messages for different roles
     role_messages = {
         "Full Stack Developer": f"""
@@ -103,8 +104,7 @@ def send_message(service, sender, message, to):
     """Send an email message."""
     try:
         message_response = service.users().messages().send(userId=sender, body=message).execute()
-        # print(f"Message Sent to:{to}, Message Id: {message_response['id']}")
-        return send_message
+        print(f"Message Sent to:{to}, Message Id: {message_response['id']}")
     except HttpError as error:
         print(f"An error occurred while sending the email to {to}: {error}")
         raise
